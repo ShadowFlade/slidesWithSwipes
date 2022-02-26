@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import bg from './bg.png';
-import ball from '../../pics/ball.png';
-import './main.scss';
 import hedge from '../../pics/hedgehog.png';
+import ball from '../../pics/ball.png';
+import stick from '../../pics/stick.png';
+import pinkSperm from '../../pics/pink_sperm.png';
 import AnimatedElement from '../animated-element/animatedElement';
 import { wobbleAnimation } from '../../animations/animations';
+import bg from './bg.png';
+import './main.scss';
+
 export default function Main() {
   const [backgroundPic, setBackgroundPic] = useState(bg);
   return (
@@ -22,16 +25,34 @@ export default function Main() {
         animation={wobbleAnimation}
         width={80}
         height={80}
-        name="ball"></AnimatedElement>
+        amplify={1}></AnimatedElement>
       <AnimatedElement
         x={10}
-        y={20}
+        y={150}
         src={hedge}
         alt="blue molecule in form of a hedgehog"
         animation={wobbleAnimation}
-        width={250}
+        width={150}
         height={100}
-        name="ball"></AnimatedElement>
+        amplify={1}></AnimatedElement>
+      <AnimatedElement
+        x={0}
+        y={250}
+        src={stick}
+        alt="blue molecule in form of a stick"
+        animation={wobbleAnimation}
+        width={150}
+        height={50}
+        amplify={1}></AnimatedElement>
+      <AnimatedElement
+        x={250}
+        y={250}
+        src={pinkSperm}
+        alt="pink sperm"
+        animation={wobbleAnimation}
+        width={150}
+        height={100}
+        amplify={0.12}></AnimatedElement>
     </div>
   );
 }

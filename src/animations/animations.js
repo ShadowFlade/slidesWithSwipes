@@ -1,9 +1,9 @@
-const wobbleAnimation = (x,y)=>{
+const wobbleAnimation = (x,y,amplify)=>{
   return {
     animation: [
-      { transform: `translate(${x}px,${y}px)` },
-      { transform: 'translate(-25px,-15px)' },
-      { transform: `translate(${x}px,${y}px)` },
+      { transform: `translate(${x*amplify}px,${y*amplify}px)` },
+      { transform: `translate(-${x*amplify}px,-${y*amplify}px)` },
+      { transform: `translate(${x*amplify}px,${y*amplify}px)` },
     ],
   
     options: {
