@@ -6,11 +6,8 @@ import darkPinkBubble from './dark-pink-bubble.png';
 import lightBlueBubble from './light-blue.png';
 import AnimatedElement from '../animated-element/animated-element';
 import { wobbleAnimation } from '../../animations/animations';
-// import bubble from './dark-pink-bubble.png';
-
-// import DarkPinkBubble from './dark-pink-bubble.png';
-
 import './product-screen.scss';
+import ProsBoard from '../pros-board/pros-board';
 
 export default function ProductScreen({ setBackgroundPic }) {
   useEffect(() => {
@@ -98,7 +95,17 @@ export default function ProductScreen({ setBackgroundPic }) {
               offset={20}
               style={{ zIndex: '5' }}></AnimatedElement>
           </div>
-          <MessageWindow items={items}></MessageWindow>
+          <div className="product-screen__info">
+            <div className="product-screen__header">
+              <h2>Ключевое сообщение</h2>
+              <h1 className="product-screen__title">
+                brend<b>xy</b>
+              </h1>
+            </div>
+
+            <ProsBoard></ProsBoard>
+            {/* <MessageWindow items={items}></MessageWindow> */}
+          </div>
         </div>
       </div>
     </div>

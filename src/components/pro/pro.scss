@@ -1,0 +1,26 @@
+@import '../../utils/variables.scss';
+.pro {
+  background-color: #fff;
+  box-shadow: 5.446px 8.387px 232.5px 17.5px rgb(157 185 198 / 39%);
+  border-radius: 45px;
+  padding: 0 10% 5% 6%;
+  &__inner {
+    top: -2rem;
+    position: relative;
+  }
+  &__pic {
+    position: relative;
+    width: 5rem;
+    img {
+      width: 100%;
+    }
+  }
+  &__text {
+    font-size: 1.7857142857rem;
+    font-family: 'DINPro';
+    color: #2e2e2e;
+    padding-top: 0.75rem;
+    padding-left: 0.3rem;
+    padding-right: rem(42);
+  }
+}

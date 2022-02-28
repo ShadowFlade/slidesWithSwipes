@@ -1,6 +1,18 @@
 .product-screen {
-  padding: 2.9rem 3.2rem 5rem 10rem;
-  flex: 0 1;
+  padding: 0 3.2rem;
+  flex: 1 0;
+
+  &__header {
+    font-size: 2rem;
+    padding-left: 9rem;
+  }
+  &__title {
+    font-size: 5rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    margin-top: 0.9rem;
+    letter-spacing: rem(10);
+  }
   &__product {
     position: absolute;
     top: 4rem;
@@ -17,5 +29,9 @@
   }
   &__message-window {
     display: flex;
+  }
+  &__info {
+    margin-left: 10rem;
+    margin-top: 5rem;
   }
 }

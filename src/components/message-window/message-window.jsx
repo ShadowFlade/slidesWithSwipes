@@ -11,12 +11,6 @@ export default function MessageWindow({ items }) {
     <div className="message-window">
       <CloseButton className="message-window__close-button"></CloseButton>
       <div className="message-window__inner">
-        <div className="message-window__header">
-          <h2>преимущества</h2>
-        </div>
-        <div className="message-window__title">
-          brend<b>xy</b>
-        </div>
         <div className="message-window__content">
           <ul className="message-window__list">
             {items.map((item, id) => {
