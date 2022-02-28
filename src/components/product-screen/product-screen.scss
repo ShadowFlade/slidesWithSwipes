@@ -7,8 +7,12 @@
     left: 1rem;
     z-index: 2;
     width: 16rem;
+    display: flex;
     img {
       width: 100%;
+      z-index: 3;
+
+      position: absolute;
     }
   }
   &__message-window {
