@@ -1,0 +1,13 @@
+@import '../../utils/variables.scss';
+.navbar {
+  width: 100%;
+  &__inner {
+    padding: $mainPadding;
+  }
+  &__logo {
+    width: 15%;
+  }
+  &__logo-pic {
+    width: 100%;
+  }
+}

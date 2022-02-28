@@ -1,3 +1,40 @@
+@import '../../utils/variables.scss';
 .main {
-  min-width: 1024px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 1042px;
+  &__inner {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0;
+    padding: $mainPadding;
+  }
+  &__message {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
+  &__text {
+    display: inline;
+    font-family: 'Gilroy';
+    line-height: 1.073;
+    font-size: rem(90);
+    text-transform: uppercase;
+    text-align-last: left;
+    margin-top: 1rem;
+    z-index: 2;
+  }
+  &__small-text {
+    font-size: rem(35);
+    font-family: 'DINPro';
+    color: rgb(36, 36, 36);
+  }
+  &__button {
+    margin-left: 5.5rem;
+    margin-bottom: 1rem;
+  }
 }

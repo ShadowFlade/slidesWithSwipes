@@ -1,0 +1,39 @@
+@import '../../utils/variables.scss';
+.message-screen {
+  &__inner {
+    padding: $mainPadding;
+    position: relative;
+  }
+  &__header {
+    text-align: left;
+    text-transform: uppercase;
+  }
+  &__title {
+    font-size: 2rem;
+  }
+  &__message {
+    margin-top: 3rem;
+  }
+  &__scroll {
+    width: 200px;
+    overflow-y: hidden;
+    background-color: transparent;
+  }
+  &__scroll-inner {
+    height: 1px;
+    line-height: 1px;
+    font-size: 1px;
+    background-color: yellow;
+  }
+  &__text-window {
+    width: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  &__text {
+    height: 30rem;
+    overflow-y: scroll;
+    direction: rtl;
+    width: 100%;
+  }
+}
