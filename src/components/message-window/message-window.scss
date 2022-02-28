@@ -1,0 +1,83 @@
+@import '../../utils/variables.scss';
+.message-window {
+  background-color: #fff;
+  padding: 2.1rem 5.3rem 2rem 12rem;
+  width: 50.1rem;
+  height: 35.7rem;
+  position: relative;
+  border-radius: 27px;
+
+  &__header {
+    font-size: 2rem;
+  }
+  &__close-button {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+  &__title {
+    font-size: 5rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    margin-top: 0.9rem;
+    letter-spacing: rem(10);
+  }
+  &__content {
+    margin-top: 2rem;
+  }
+  &__list {
+    padding-right: 2rem;
+  }
+  &__item {
+    font-size: rem(18.6);
+    margin-top: 1.3rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  &__number {
+    font-family: 'Gilroy';
+    color: rgb(140, 201, 232);
+    font-weight: bold;
+    line-height: 1.2;
+  }
+  &__text {
+    margin-top: 0.5rem;
+    font-size: 1.2em;
+    font-family: 'DINPro';
+    color: rgb(46, 46, 46);
+    line-height: 1.2;
+    word-spacing: 4px;
+  }
+  &__pagination {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 2.5rem;
+  }
+  &__arrow {
+    width: 0.65rem;
+  }
+  &__dotes {
+    display: flex;
+    justify-content: unset;
+    align-items: center;
+    padding: 0 1.2rem;
+  }
+  &__dot {
+    $length: 0.6rem;
+    margin-right: 0.7rem;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid black;
+    width: $length;
+    height: $length;
+    &:last-child {
+      margin-right: 0;
+    }
+    &--active {
+      background-color: rgb(252, 109, 169);
+    }
+  }
+}

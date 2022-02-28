@@ -1,0 +1,17 @@
+.product-screen {
+  padding: 2.9rem 3.2rem 5rem 10rem;
+  flex: 0 1;
+  &__product {
+    position: absolute;
+    top: 4rem;
+    left: 1rem;
+    z-index: 2;
+    width: 16rem;
+    img {
+      width: 100%;
+    }
+  }
+  &__message-window {
+    display: flex;
+  }
+}

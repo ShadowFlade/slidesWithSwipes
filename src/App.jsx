@@ -6,6 +6,7 @@ import Footer from './components/footer/footer';
 import './nullstyle.css';
 import './App.css';
 import bg from './components/main/bg.png';
+import ProductScreen from './components/product-screen/product-screen';
 
 export default function App() {
   const [background, setBackground] = useState();
@@ -16,7 +17,8 @@ export default function App() {
       style={{ background: `center / cover no-repeat url(${background})` }}>
       <Navbar></Navbar>
       {/* <Main setBackgroundPic={setBackground}></Main> */}
-      <MessageScreen setBackgroundPic={setBackground}></MessageScreen>
+      {/* <MessageScreen setBackgroundPic={setBackground}></MessageScreen> */}
+      <ProductScreen setBackgroundPic={setBackground}></ProductScreen>
       <Footer></Footer>
     </div>
   );
