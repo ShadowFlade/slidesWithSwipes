@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import hedge from '../animated-element/hedgehog.png';
 import halfHedge from '../animated-element/hedgehog.png';
 import ball from '../animated-element/ball.png';
@@ -6,14 +6,10 @@ import stick from '../animated-element/stick.png';
 import pinkSperm from '../animated-element/pink_sperm.png';
 import AnimatedElement from '../animated-element/animated-element';
 import { wobbleAnimation } from '../../animations/animations';
-import './main.scss';
-import bg from './bg.png';
 import Button from '../button/button';
+import './main.scss';
 
 export default function Main({ setBackgroundPic }) {
-  useEffect(() => {
-    setBackgroundPic(bg);
-  }, []);
   return (
     <div className="main">
       <div className="main__inner">

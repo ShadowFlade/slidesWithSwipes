@@ -6,7 +6,7 @@ import { ReactComponent as ArrowBack } from './arrow_back.svg';
 import { ReactComponent as ArrowForward } from './arrow_forward.svg';
 import './message-window.scss';
 import MessageList from '../message-list/message-list';
-export default function MessageWindow({ items, setIsOpen }) {
+export default function MessageWindow({ items, setIsOpen, header, title }) {
   const [dotes, setDots] = useState([]);
   const [activeDot, setActiveDot] = useState(0);
   const closeModal = () => {
@@ -66,9 +66,9 @@ export default function MessageWindow({ items, setIsOpen }) {
   return (
     <div className="message-window">
       <div className="product-screen__header" style={{ paddingLeft: '0' }}>
-        <h2>Преимущества</h2>
+        <h2>{header}</h2>
         <h1 className="product-screen__title">
-          brend<b>xy</b>
+          brend<b>{title}</b>
         </h1>
       </div>
       <CloseButton

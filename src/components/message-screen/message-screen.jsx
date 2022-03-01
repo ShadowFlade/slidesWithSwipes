@@ -3,13 +3,9 @@ import AnimatedElement from '../animated-element/animated-element';
 import WindowWithCustomScrollbar from '../WindowWithCustomScrollbar/window-with-custom-scrollbar';
 import sperm from '../animated-element/pink_sperm.png';
 import { wobbleAnimation } from '../../animations/animations';
-import bg from './bg2.png';
 
 import './message-screen.scss';
 export default function MessageScreen({ setBackgroundPic }) {
-  useEffect(() => {
-    setBackgroundPic(bg);
-  }, []);
   return (
     <div className="message-screen">
       <div className="message-screen__inner">

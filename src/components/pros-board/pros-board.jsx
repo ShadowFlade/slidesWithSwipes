@@ -4,12 +4,18 @@ import utensils from '../pro/icon1.png';
 import calendar from '../pro/icon2.png';
 import Button from '../button/button';
 import './pros-board.scss';
-export default function ProsBoard({ setIsOpen, openModal }) {
+export default function ProsBoard({ setIsOpen, openModal, header, title }) {
   const text1 =
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae unde maiores dolorum.';
   const text2 = 'A arcu cursus vitae';
   return (
     <div className="pros-board">
+      <div className="product-screen__header">
+        <h2>{header}</h2>
+        <h1 className="product-screen__title">
+          brend<b>{title}</b>
+        </h1>
+      </div>
       <div className="pros-board__inner">
         <div className="pros-board__items">
           <div className="pros-board__item">

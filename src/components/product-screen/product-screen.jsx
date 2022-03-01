@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import MessageWindow from '../message-window/message-window';
-import bg from './bg3.png';
 import product from './product.png';
 import darkPinkBubble from './dark-pink-bubble.png';
 import lightBlueBubble from './light-blue.png';
@@ -12,18 +11,15 @@ import ProsBoard from '../pros-board/pros-board';
 export default function ProductScreen({ setBackgroundPic }) {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
-    console.log('smth');
     const shadow = document.createElement('div');
-    shadow.classList.add('shadow');
+    shadow.classList.add('shadow', 'shadow--active');
     document.body.append(shadow);
     setIsOpen(true);
     document.getElementsByClassName('product-screen__product')[0].style.zIndex =
       '20';
     document.getElementsByClassName('shadow')[0].style.display = 'block';
   };
-  useEffect(() => {
-    setBackgroundPic(bg);
-  });
+
   const [items, setItems] = useState([
     { text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.' },
     { text: 'Lorem ipsum dolor sit amet.' },
@@ -110,19 +106,19 @@ export default function ProductScreen({ setBackgroundPic }) {
               style={{ zIndex: '5' }}></AnimatedElement>
           </div>
           <div className="product-screen__info">
-            <div className="product-screen__header">
-              <h2>Ключевое сообщение</h2>
-              <h1 className="product-screen__title">
-                brend<b>xy</b>
-              </h1>
-            </div>
             {isOpen && (
               <MessageWindow
                 items={items}
                 isOpen={isOpen}
-                setIsOpen={setIsOpen}></MessageWindow>
+                setIsOpen={setIsOpen}
+                header="преимущества"
+                title="xy"></MessageWindow>
             )}
-            <ProsBoard setIsOpen={setIsOpen} openModal={openModal}></ProsBoard>
+            <ProsBoard
+              setIsOpen={setIsOpen}
+              openModal={openModal}
+              header="ключевое сообщение"
+              title="xy"></ProsBoard>
           </div>
         </div>
       </div>

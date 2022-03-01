@@ -1,33 +1,45 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Main from './components/main/main';
 import MessageScreen from './components/message-screen/message-screen';
+import ProductScreen from './components/product-screen/product-screen';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
 import './nullstyle.css';
-import './App.css';
-import ProductScreen from './components/product-screen/product-screen';
+import './App.scss';
 
 export default function App() {
   const scroll = useRef();
   const app = useRef();
   const detectSwipe = (e) => {
+    e.preventDefault();
     const start = {
       top: e.clientY,
       left: e.clientX,
     };
-    const offsetLength = 50;
+    const distanceToCoveToSwipe = 50;
     let distanceSwiped = 0;
     const onPointerUp = () => {
-      document.removeEventListener('pointermove', detectMove);
+      document.removeEventListener('pointermove', detectMove, {
+        passive: false,
+      });
     };
     const detectMove = (e) => {
+      e.preventDefault();
       distanceSwiped = Math.abs(Math.abs(start.left) - Math.abs(e.clientX));
-      console.log('🚀 ~ detectMove ~ distanceSwiped', distanceSwiped);
-      if (distanceSwiped > offsetLength && e.clientX < start.left) {
-        scroll.current.scrollBy(app.current.clientWidth, 0);
+      if (distanceSwiped > distanceToCoveToSwipe && e.clientX < start.left) {
+        scroll.current.scrollBy({
+          left: app.current.clientWidth,
+          behavior: 'smooth',
+        });
         document.removeEventListener('pointermove', detectMove);
-      } else if (distanceSwiped > offsetLength && e.clientX > start.left) {
-        scroll.current.scrollBy(-app.current.clientWidth, 0);
+      } else if (
+        distanceSwiped > distanceToCoveToSwipe &&
+        e.clientX > start.left
+      ) {
+        scroll.current.scrollBy({
+          left: -app.current.clientWidth,
+          behavior: 'smooth',
+        });
         document.removeEventListener('pointermove', detectMove);
       }
     };
@@ -36,25 +48,30 @@ export default function App() {
     document.addEventListener('pointerup', onPointerUp);
   };
   useEffect(() => {
-    document.addEventListener('pointerdown', detectSwipe);
+    document.addEventListener('pointerdown', detectSwipe, { passive: false });
+    document.addEventListener(
+      'touchmove',
+      function (e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
   }, []);
   const [background, setBackground] = useState();
 
   return (
-    <div
-      className="app"
-      ref={app}
-      style={{ background: `center / cover no-repeat url(${background})` }}>
-      <Navbar></Navbar>
+    <div className="app" ref={app}>
       <div className="app__inner" ref={scroll}>
+        <Navbar></Navbar>
         <div className="app__content">
           <Main setBackgroundPic={setBackground}></Main>
-          <MessageScreen setBackgroundPic={setBackground}></MessageScreen>
+          <MessageScreen
+            setBackgroundPic={setBackground}
+            style={{ width: '100vw' }}></MessageScreen>
           <ProductScreen setBackgroundPic={setBackground}></ProductScreen>
         </div>
+        <Footer></Footer>
       </div>
-
-      <Footer></Footer>
     </div>
   );
 }

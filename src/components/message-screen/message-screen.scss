@@ -1,5 +1,10 @@
 @import '../../utils/variables.scss';
 .message-screen {
+  flex: 1 0 100%;
+  background: center / cover repeat url('./bg22.png');
+  padding-top: $paddingTop;
+  padding-bottom: $paddingBottom;
+
   &__inner {
     padding: $mainPadding;
     position: relative;

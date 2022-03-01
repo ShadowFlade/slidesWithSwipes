@@ -1,5 +1,6 @@
 html {
   user-select: none;
+  touch-action: none;
 }
 body {
   margin: 0;

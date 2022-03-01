@@ -68,7 +68,7 @@
 .shadow {
   position: fixed;
   border: none;
-  display: none;
+  display: block;
   width: 100%;
   top: 0;
   bottom: 0;
@@ -80,5 +80,11 @@
   opacity: 0;
   transition: opacity 0.15s ease;
   background-color: black;
-  opacity: 0.6;
+  opacity: 0;
+  transition: transform 0.2s ease 0s, opacity 0.2s ease 0s;
+  transform: scale(0);
+  &--active {
+    transform: scale(1);
+    opacity: 0.6;
+  }
 }

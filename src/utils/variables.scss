@@ -1,5 +1,7 @@
 $mainFontSize: 14px;
 $mainPadding: 1.75rem 6.5%;
+$paddingTop: 78.26px;
+$paddingBottom: 22px;
 // px to rem
 @function rem($pixels, $context: $mainFontSize) {
   @if (unitless($pixels)) {

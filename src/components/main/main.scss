@@ -6,6 +6,8 @@
   display: flex;
   flex-direction: column;
   flex: 1 0 100%;
+  background: center / cover no-repeat url('./bg.png');
+  position: relative;
   &__inner {
     width: 100%;
     align-items: center;
