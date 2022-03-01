@@ -4,7 +4,7 @@ import utensils from '../pro/icon1.png';
 import calendar from '../pro/icon2.png';
 import Button from '../button/button';
 import './pros-board.scss';
-export default function ProsBoard() {
+export default function ProsBoard({ setIsOpen, openModal }) {
   const text1 =
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae unde maiores dolorum.';
   const text2 = 'A arcu cursus vitae';
@@ -30,7 +30,14 @@ export default function ProsBoard() {
                 type="small"></Pro>
             </div>
             <div className="pros-board__item">
-              <Button element="plus" color="white" text="Подробнее"></Button>
+              <Button
+                onClick={() => {
+                  console.log('anything');
+                  openModal();
+                }}
+                element="plus"
+                color="white"
+                text="Подробнее"></Button>
             </div>
           </div>
         </div>

@@ -10,10 +10,24 @@ import './product-screen.scss';
 import ProsBoard from '../pros-board/pros-board';
 
 export default function ProductScreen({ setBackgroundPic }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    console.log('smth');
+    const shadow = document.createElement('div');
+    shadow.classList.add('shadow');
+    document.body.append(shadow);
+    setIsOpen(true);
+    document.getElementsByClassName('product-screen__product')[0].style.zIndex =
+      '20';
+    document.getElementsByClassName('shadow')[0].style.display = 'block';
+  };
   useEffect(() => {
     setBackgroundPic(bg);
   });
   const [items, setItems] = useState([
+    { text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.' },
+    { text: 'Lorem ipsum dolor sit amet.' },
+    { text: 'Lorem ipsum dolor sit amet.' },
     { text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.' },
     { text: 'Lorem ipsum dolor sit amet.' },
     { text: 'Lorem ipsum dolor sit amet.' },
@@ -102,9 +116,13 @@ export default function ProductScreen({ setBackgroundPic }) {
                 brend<b>xy</b>
               </h1>
             </div>
-
-            <ProsBoard></ProsBoard>
-            {/* <MessageWindow items={items}></MessageWindow> */}
+            {isOpen && (
+              <MessageWindow
+                items={items}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}></MessageWindow>
+            )}
+            <ProsBoard setIsOpen={setIsOpen} openModal={openModal}></ProsBoard>
           </div>
         </div>
       </div>

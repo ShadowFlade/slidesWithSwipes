@@ -3,10 +3,10 @@ import './button.scss';
 import { ReactComponent as Plus } from './plus.svg';
 import { ReactComponent as ArrowForward } from './arrow-forward.svg';
 
-export default function Button({ element, text, color }) {
+export default function Button({ element, text, color, onClick }) {
   //TODO need improvement
   return (
-    <button className="button">
+    <button className="button" onClick={onClick}>
       <div className="button__center">
         <div className="button__inner">
           <span className="button__icon">
