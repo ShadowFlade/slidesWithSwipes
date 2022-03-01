@@ -5,6 +5,8 @@ export default function WindowWithCustomScrollbar({ text }) {
   const content = useRef();
   const scrollThumb = useRef();
   const scrollTrack = useRef();
+  let scrollTrackStart;
+  let scrollTrackEnd;
   const syncScrollbars = (thumb, elWithScroll, track) => {
     elWithScroll.addEventListener('scroll', () => {
       const scrollHeight = elWithScroll.scrollHeight;
@@ -15,7 +17,38 @@ export default function WindowWithCustomScrollbar({ text }) {
   };
   useEffect(() => {
     syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
+    scrollThumb.current.addEventListener('pointerdown', onPointerDown);
+    scrollTrackStart = scrollTrack.current.getBoundingClientRect().top;
+    scrollTrackEnd =
+      scrollTrack.current.getBoundingClientRect().top +
+      scrollTrack.current.clientHeight;
   }, []);
+
+  const onPointerDown = (e) => {
+    const event = e;
+    const thumb = scrollThumb.current;
+    const offsetY =
+      event.clientY - event.currentTarget.getBoundingClientRect().top;
+    let trackY = scrollTrackStart;
+    const onPointerMove = (e) => {
+      const event = e;
+      const realY = event.clientY;
+      let newY = event.clientY - offsetY - 235 + 'px';
+      if (realY + thumb.offsetHeight / 2 > scrollTrackEnd) {
+        newY = scrollTrackEnd - thumb.offsetHeight / 2 + 'px';
+      } else if (realY - offsetY < scrollTrackStart) {
+        newY = thumb.offsetHeight + 'px';
+      } else {
+        thumb.style.top = newY;
+      }
+    };
+    const onPointerUp = (e) => {
+      scrollThumb.current.removeEventListener('pointermove', onPointerMove);
+    };
+    scrollThumb.current.addEventListener('pointermove', onPointerMove);
+    scrollThumb.current.addEventListener('pointerup', onPointerUp);
+  };
+
   return (
     <div className="custom-window">
       <div className="custom-window__scroll">
