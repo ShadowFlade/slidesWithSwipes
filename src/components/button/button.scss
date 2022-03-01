@@ -2,9 +2,9 @@
   flex: 0 0;
   background-color: #f0699c;
   border-radius: 44px;
-  padding: 2rem;
   width: 18rem;
   height: 5rem;
+  padding: 0 1rem;
   &__center {
     display: flex;
     align-items: center;
@@ -33,5 +33,6 @@
     display: inline-grid;
     align-content: center;
     font-size: 1.9rem;
+    padding-left: 0.7rem;
   }
 }

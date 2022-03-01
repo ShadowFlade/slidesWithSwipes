@@ -6,6 +6,18 @@
   justify-content: space-between;
   position: relative;
 }
+.app__inner {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100vw;
+}
+.app__content {
+  display: flex;
+  width: 100%;
+}
+.app__inner::-webkit-scrollbar {
+  display: none;
+}
 
 .App-logo {
   height: 40vmin;
