@@ -1,19 +1,28 @@
 @import '../../utils/variables.scss';
 .message-window {
   background-color: #fff;
-  padding: 2.1rem 5.3rem 2rem 6rem;
-  width: 50.1rem;
+  width: 47.1rem;
   height: 35.7rem;
   position: absolute;
   border-radius: 27px;
   z-index: 19;
-  top: 140px;
+  top: 120px;
+  padding: 2rem 5.3rem 2rem 9rem;
 
   &__header {
     font-size: 2rem;
+    padding-left: 9rem;
+  }
+  &__title {
+    font-size: 5rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    margin-top: 0.9rem;
+    letter-spacing: rem(10);
   }
   &__content {
     overflow-x: scroll;
+    padding-top: 2.6rem;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -23,8 +32,8 @@
   }
   &__close-button {
     position: absolute;
-    right: 1rem;
-    top: 1rem;
+    right: 2.2rem;
+    top: 2.1rem;
   }
   &__title {
     font-size: 5rem;

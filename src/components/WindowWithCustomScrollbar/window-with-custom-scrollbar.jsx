@@ -23,7 +23,9 @@ export default function WindowWithCustomScrollbar({ text }) {
       scrollTrack.current.getBoundingClientRect().top +
       scrollTrack.current.clientHeight;
   }, []);
-
+  const scrollMessageWindow = (scrollItem, scrollOptions) => {
+    scrollItem.scrollBy(scrollOptions);
+  };
   const onPointerDown = (e) => {
     const event = e;
     const thumb = scrollThumb.current;
@@ -33,13 +35,17 @@ export default function WindowWithCustomScrollbar({ text }) {
     const onPointerMove = (e) => {
       const event = e;
       const realY = event.clientY;
-      let newY = event.clientY - offsetY - 235 + 'px';
+      let newY = event.clientY - offsetY - trackY + 'px';
       if (realY + thumb.offsetHeight / 2 > scrollTrackEnd) {
         newY = scrollTrackEnd - thumb.offsetHeight / 2 + 'px';
       } else if (realY - offsetY < scrollTrackStart) {
         newY = thumb.offsetHeight + 'px';
       } else {
         thumb.style.top = newY;
+        // content.current.scrollBy({
+        //   top: newY,
+        //   behavior: 'smooth',
+        // });
       }
     };
     const onPointerUp = (e) => {

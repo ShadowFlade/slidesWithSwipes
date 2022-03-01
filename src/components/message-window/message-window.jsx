@@ -65,15 +65,17 @@ export default function MessageWindow({ items, setIsOpen, header, title }) {
   };
   return (
     <div className="message-window">
-      <div className="product-screen__header" style={{ paddingLeft: '0' }}>
+      <div className="message-window__header" style={{ paddingLeft: '0' }}>
         <h2>{header}</h2>
-        <h1 className="product-screen__title">
+        <h1 className="message-window__title">
           brend<b>{title}</b>
         </h1>
       </div>
       <CloseButton
         onClick={closeModal}
-        className="message-window__close-button"></CloseButton>
+        className="message-window__close-button"
+        width="30px"
+        height="30px"></CloseButton>
       <div className="message-window__inner">
         <div className="message-window__content" ref={parent}>
           <div
