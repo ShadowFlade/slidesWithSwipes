@@ -38,7 +38,6 @@ export default function ProsBoard({ setIsOpen, openModal, header, title }) {
             <div className="pros-board__item">
               <Button
                 onClick={() => {
-                  console.log('anything');
                   openModal();
                 }}
                 element="plus"

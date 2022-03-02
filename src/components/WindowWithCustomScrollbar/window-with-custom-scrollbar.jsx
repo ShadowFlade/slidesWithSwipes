@@ -1,58 +1,63 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import './window-with-custom-scrollbar.scss';
 import thumb from './thumb.png';
 export default function WindowWithCustomScrollbar({ text }) {
   const content = useRef();
   const scrollThumb = useRef();
   const scrollTrack = useRef();
+  let offsetY;
   let scrollTrackStart;
-  let scrollTrackEnd;
+  let trackHeight;
+  let thumbItem;
+  let thumbHeight;
+  let trackY;
   const syncScrollbars = (thumb, elWithScroll, track) => {
-    elWithScroll.addEventListener('scroll', () => {
-      const scrollHeight = elWithScroll.scrollHeight;
-      const customBarHeight = track.offsetHeight;
+    const scrollHeight = elWithScroll.scrollHeight;
+    const customBarHeight = track.offsetHeight;
+    elWithScroll.addEventListener('scroll', (e) => {
       const ratio = customBarHeight / scrollHeight;
-      thumb.style.top = elWithScroll.scrollTop * ratio + 'px';
+      const newTop = e.target.scrollTop * ratio + 'px';
+      thumb.style.top = newTop;
     });
   };
   useEffect(() => {
-    syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
-    scrollThumb.current.addEventListener('pointerdown', onPointerDown);
+    trackHeight = scrollTrack.current.offsetHeight;
+    thumbItem = scrollThumb.current;
+    thumbHeight = thumbItem.offsetHeight;
     scrollTrackStart = scrollTrack.current.getBoundingClientRect().top;
-    scrollTrackEnd =
-      scrollTrack.current.getBoundingClientRect().top +
-      scrollTrack.current.clientHeight;
+    trackY = scrollTrackStart;
+    syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
+    thumbItem.addEventListener('pointerdown', onPointerDown);
   }, []);
-  const scrollMessageWindow = (scrollItem, scrollOptions) => {
-    scrollItem.scrollBy(scrollOptions);
-  };
-  const onPointerDown = (e) => {
-    const event = e;
-    const thumb = scrollThumb.current;
-    const offsetY =
-      event.clientY - event.currentTarget.getBoundingClientRect().top;
-    let trackY = scrollTrackStart;
-    const onPointerMove = (e) => {
+  const onPointerMove = useCallback(
+    (e) => {
       const event = e;
+
       const realY = event.clientY;
-      let newY = event.clientY - offsetY - trackY + 'px';
-      if (realY + thumb.offsetHeight / 2 > scrollTrackEnd) {
-        newY = scrollTrackEnd - thumb.offsetHeight / 2 + 'px';
-      } else if (realY - offsetY < scrollTrackStart) {
-        newY = thumb.offsetHeight + 'px';
+      let newY = event.clientY - trackY - offsetY;
+
+      if (newY < 0) {
+        newY = 0 + thumbHeight / 2 + 'px';
+      } else if (newY + thumbHeight > trackHeight) {
+        newY = trackHeight - thumbHeight + 'px';
       } else {
-        thumb.style.top = newY;
-        // content.current.scrollBy({
-        //   top: newY,
-        //   behavior: 'smooth',
-        // });
+        const smth = newY + 'px';
+        thumbItem.style.top = smth;
+        content.current.scrollBy({
+          top: parseInt(newY),
+          behavior: 'smooth',
+        });
       }
-    };
+    },
+    [offsetY]
+  );
+  const onPointerDown = (e) => {
+    offsetY = e.clientY - thumbItem.getBoundingClientRect().top;
     const onPointerUp = (e) => {
-      scrollThumb.current.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointermove', onPointerMove);
     };
-    scrollThumb.current.addEventListener('pointermove', onPointerMove);
-    scrollThumb.current.addEventListener('pointerup', onPointerUp);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
   };
 
   return (

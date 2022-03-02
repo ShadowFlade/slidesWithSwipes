@@ -49,13 +49,13 @@ export default function App() {
   };
   useEffect(() => {
     document.addEventListener('pointerdown', detectSwipe, { passive: false });
-    document.addEventListener(
-      'touchmove',
-      function (e) {
-        e.preventDefault();
-      },
-      { passive: false }
-    );
+    // document.addEventListener(
+    //   'touchmove',
+    //   function (e) {
+    //     e.preventDefault();
+    //   },
+    //   { passive: false }
+    // );
   }, []);
   const [background, setBackground] = useState();
 
