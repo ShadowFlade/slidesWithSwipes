@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import hedge from '../animated-element/hedgehog.png';
 import halfHedge from '../animated-element/hedgehog.png';
 import ball from '../animated-element/ball.png';
@@ -9,7 +9,7 @@ import { wobbleAnimation } from '../../animations/animations';
 import Button from '../button/button';
 import './main.scss';
 
-export default function Main({ setBackgroundPic }) {
+export default function Main({ onClick }) {
   return (
     <div className="main">
       <div className="main__inner">
@@ -117,7 +117,11 @@ export default function Main({ setBackgroundPic }) {
           <p className="main__text">
             это <b>не</b> коммерческое задание
             <span className="main__button">
-              <Button text="Что дальше?" color="white" element="arrow"></Button>
+              <Button
+                onClick={onClick}
+                text="Что дальше?"
+                color="white"
+                element="arrow"></Button>
             </span>
           </p>
         </div>

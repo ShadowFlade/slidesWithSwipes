@@ -10,6 +10,12 @@ import './App.scss';
 export default function App() {
   const scroll = useRef();
   const app = useRef();
+  const slide = ({ scroll, width }) => {
+    scroll.scrollBy({
+      left: width,
+      behavior: 'smooth',
+    });
+  };
   const detectSwipe = (e) => {
     e.preventDefault();
     const start = {
@@ -23,23 +29,19 @@ export default function App() {
         passive: false,
       });
     };
+
     const detectMove = (e) => {
       e.preventDefault();
       distanceSwiped = Math.abs(Math.abs(start.left) - Math.abs(e.clientX));
       if (distanceSwiped > distanceToCoveToSwipe && e.clientX < start.left) {
-        scroll.current.scrollBy({
-          left: app.current.clientWidth,
-          behavior: 'smooth',
-        });
+        slide({ width: app.current.clientWidth, scroll: scroll.current });
         document.removeEventListener('pointermove', detectMove);
       } else if (
         distanceSwiped > distanceToCoveToSwipe &&
         e.clientX > start.left
       ) {
-        scroll.current.scrollBy({
-          left: -app.current.clientWidth,
-          behavior: 'smooth',
-        });
+        slide({ width: -app.current.clientWidth, scroll: scroll.current });
+
         document.removeEventListener('pointermove', detectMove);
       }
     };
@@ -49,13 +51,13 @@ export default function App() {
   };
   useEffect(() => {
     document.addEventListener('pointerdown', detectSwipe, { passive: false });
-    // document.addEventListener(
-    //   'touchmove',
-    //   function (e) {
-    //     e.preventDefault();
-    //   },
-    //   { passive: false }
-    // );
+    document.addEventListener(
+      'touchmove',
+      function (e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
   }, []);
   const [background, setBackground] = useState();
 
@@ -64,7 +66,12 @@ export default function App() {
       <div className="app__inner" ref={scroll}>
         <Navbar></Navbar>
         <div className="app__content">
-          <Main setBackgroundPic={setBackground}></Main>
+          <Main
+            onClick={slide.bind(this, {
+              width: app.current.clientWidth,
+              scroll: scroll.current,
+            })}
+            setBackgroundPic={setBackground}></Main>
           <MessageScreen
             setBackgroundPic={setBackground}
             style={{ width: '100vw' }}></MessageScreen>

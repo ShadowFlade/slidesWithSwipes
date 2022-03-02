@@ -5,6 +5,7 @@ export default function WindowWithCustomScrollbar({ text }) {
   const content = useRef();
   const scrollThumb = useRef();
   const scrollTrack = useRef();
+  let isTouchingScrollbar = false;
   let offsetY;
   let scrollTrackStart;
   let trackHeight;
@@ -14,10 +15,13 @@ export default function WindowWithCustomScrollbar({ text }) {
   const syncScrollbars = (thumb, elWithScroll, track) => {
     const scrollHeight = elWithScroll.scrollHeight;
     const customBarHeight = track.offsetHeight;
+    const ratio = customBarHeight / scrollHeight;
+
     elWithScroll.addEventListener('scroll', (e) => {
-      const ratio = customBarHeight / scrollHeight;
-      const newTop = e.target.scrollTop * ratio + 'px';
-      thumb.style.top = newTop;
+      if (!isTouchingScrollbar) {
+        const newTop = e.target.scrollTop * ratio + 'px';
+        thumb.style.top = newTop;
+      }
     });
   };
   useEffect(() => {
@@ -26,13 +30,12 @@ export default function WindowWithCustomScrollbar({ text }) {
     thumbHeight = thumbItem.offsetHeight;
     scrollTrackStart = scrollTrack.current.getBoundingClientRect().top;
     trackY = scrollTrackStart;
-    syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
+    syncScrollbars(thumbItem, content.current, scrollTrack.current);
     thumbItem.addEventListener('pointerdown', onPointerDown);
   }, []);
   const onPointerMove = useCallback(
     (e) => {
       const event = e;
-
       const realY = event.clientY;
       let newY = event.clientY - trackY - offsetY;
 
@@ -41,20 +44,25 @@ export default function WindowWithCustomScrollbar({ text }) {
       } else if (newY + thumbHeight > trackHeight) {
         newY = trackHeight - thumbHeight + 'px';
       } else {
-        const smth = newY + 'px';
-        thumbItem.style.top = smth;
-        content.current.scrollBy({
-          top: parseInt(newY),
-          behavior: 'smooth',
+        thumbItem.style.top = newY + 'px';
+        const ratio =
+          content.current.scrollHeight / scrollTrack.current.offsetHeight;
+
+        const scroll = newY * ratio;
+
+        content.current.scrollTo({
+          top: scroll,
         });
       }
     },
     [offsetY]
   );
   const onPointerDown = (e) => {
+    isTouchingScrollbar = true;
     offsetY = e.clientY - thumbItem.getBoundingClientRect().top;
     const onPointerUp = (e) => {
       document.removeEventListener('pointermove', onPointerMove);
+      isTouchingScrollbar = false;
     };
     document.addEventListener('pointermove', onPointerMove);
     document.addEventListener('pointerup', onPointerUp);
