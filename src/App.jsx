@@ -10,12 +10,13 @@ import './App.scss';
 export default function App() {
   const scroll = useRef();
   const app = useRef();
-  const slide = ({ scroll, width }) => {
-    scroll.scrollBy({
-      left: width,
+  const slide = ({ scroll, app, forward }) => {
+    scroll.current.scrollBy({
+      left: forward ? app.current.clientWidth : -app.current.clientWidth,
       behavior: 'smooth',
     });
   };
+
   const detectSwipe = (e) => {
     e.preventDefault();
     const start = {
@@ -29,18 +30,17 @@ export default function App() {
         passive: false,
       });
     };
-
     const detectMove = (e) => {
       e.preventDefault();
       distanceSwiped = Math.abs(Math.abs(start.left) - Math.abs(e.clientX));
       if (distanceSwiped > distanceToCoveToSwipe && e.clientX < start.left) {
-        slide({ width: app.current.clientWidth, scroll: scroll.current });
+        slide({ scroll, app, forward: true });
         document.removeEventListener('pointermove', detectMove);
       } else if (
         distanceSwiped > distanceToCoveToSwipe &&
         e.clientX > start.left
       ) {
-        slide({ width: -app.current.clientWidth, scroll: scroll.current });
+        slide({ scroll, app, forward: false });
 
         document.removeEventListener('pointermove', detectMove);
       }
@@ -67,10 +67,7 @@ export default function App() {
         <Navbar></Navbar>
         <div className="app__content">
           <Main
-            onClick={slide.bind(this, {
-              width: app.current.clientWidth,
-              scroll: scroll.current,
-            })}
+            slide={slide.bind(this, { app, scroll, forward: true })}
             setBackgroundPic={setBackground}></Main>
           <MessageScreen
             setBackgroundPic={setBackground}

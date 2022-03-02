@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import hedge from '../animated-element/hedgehog.png';
 import halfHedge from '../animated-element/hedgehog.png';
 import ball from '../animated-element/ball.png';
@@ -9,7 +9,10 @@ import { wobbleAnimation } from '../../animations/animations';
 import Button from '../button/button';
 import './main.scss';
 
-export default function Main({ onClick }) {
+export default function Main({ onClick, slide }) {
+  useEffect(() => {
+    console.log(typeof slide);
+  });
   return (
     <div className="main">
       <div className="main__inner">
@@ -118,7 +121,7 @@ export default function Main({ onClick }) {
             это <b>не</b> коммерческое задание
             <span className="main__button">
               <Button
-                onClick={onClick}
+                onClick={() => slide()}
                 text="Что дальше?"
                 color="white"
                 element="arrow"></Button>
