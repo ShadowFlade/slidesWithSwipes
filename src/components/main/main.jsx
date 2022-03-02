@@ -10,9 +10,6 @@ import Button from '../button/button';
 import './main.scss';
 
 export default function Main({ onClick, slide }) {
-  useEffect(() => {
-    console.log(typeof slide);
-  });
   return (
     <div className="main">
       <div className="main__inner">
