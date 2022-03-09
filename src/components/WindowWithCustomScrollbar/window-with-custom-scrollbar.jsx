@@ -1,72 +1,67 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
-import './window-with-custom-scrollbar.scss';
-import thumb from './thumb.png';
+import React, { useEffect, useRef, useCallback, useState } from 'react'
+import './window-with-custom-scrollbar.scss'
+import thumb from './thumb.png'
 export default function WindowWithCustomScrollbar({ text }) {
-  const content = useRef();
-  const scrollThumb = useRef();
-  const scrollTrack = useRef();
-  let isTouchingScrollbar = false;
-  let offsetY;
-  let scrollTrackStart;
-  let trackHeight;
-  let thumbItem;
-  let thumbHeight;
-  let trackY;
+  const content = useRef()
+  const scrollThumb = useRef()
+  const scrollTrack = useRef()
+  const trackHeight = useRef(0)
+  const [isTouchingScrollbar, setIsTouchingScrollbar] = useState(false)
+  let offsetY
+  let thumbItem
+  let thumbHeight
+  let trackY
   const syncScrollbars = (thumb, elWithScroll, track) => {
-    const scrollHeight = elWithScroll.scrollHeight;
-    const customBarHeight = track.offsetHeight;
-    const ratio = customBarHeight / scrollHeight;
+    const scrollHeight = elWithScroll.scrollHeight
+    const customBarHeight = track.offsetHeight
+    const ratio = customBarHeight / scrollHeight
 
     elWithScroll.addEventListener('scroll', (e) => {
       if (!isTouchingScrollbar) {
-        const newTop = e.target.scrollTop * ratio + 'px';
-        thumb.style.top = newTop;
+        const newTop = e.target.scrollTop * ratio + 'px'
+        thumb.style.top = newTop
       }
-    });
-  };
+    })
+  }
   useEffect(() => {
-    trackHeight = scrollTrack.current.offsetHeight;
-    thumbItem = scrollThumb.current;
-    thumbHeight = thumbItem.offsetHeight;
-    scrollTrackStart = scrollTrack.current.getBoundingClientRect().top;
-    trackY = scrollTrackStart;
-    syncScrollbars(thumbItem, content.current, scrollTrack.current);
-    thumbItem.addEventListener('pointerdown', onPointerDown);
-  }, []);
+    trackHeight.current = scrollTrack.current.offsetHeight
+    thumbItem = scrollThumb.current
+    thumbHeight = thumbItem.offsetHeight
+    trackY = scrollTrack.current.getBoundingClientRect().top
+    syncScrollbars(thumbItem, content.current, scrollTrack.current)
+    thumbItem.addEventListener('pointerdown', onPointerDown)
+  }, [scrollTrack.current])
   const onPointerMove = useCallback(
     (e) => {
-      const event = e;
-      const realY = event.clientY;
-      let newY = event.clientY - trackY - offsetY;
+      const event = e
+      let newY = event.clientY - trackY - offsetY
 
       if (newY < 0) {
-        newY = 0 + thumbHeight / 2 + 'px';
-      } else if (newY + thumbHeight > trackHeight) {
-        newY = trackHeight - thumbHeight + 'px';
+        newY = 0 + thumbHeight / 2 + 'px'
+      } else if (newY + thumbHeight > trackHeight.current) {
+        newY = trackHeight.current - thumbHeight + 'px'
       } else {
-        thumbItem.style.top = newY + 'px';
+        thumbItem.style.top = newY + 'px'
         const ratio =
-          content.current.scrollHeight / scrollTrack.current.offsetHeight;
-
-        const scroll = newY * ratio;
-
+          content.current.scrollHeight / scrollTrack.current.offsetHeight
+        const scroll = newY * ratio
         content.current.scrollTo({
           top: scroll,
-        });
+        })
       }
     },
     [offsetY]
-  );
+  )
   const onPointerDown = (e) => {
-    isTouchingScrollbar = true;
-    offsetY = e.clientY - thumbItem.getBoundingClientRect().top;
+    setIsTouchingScrollbar(true)
+    offsetY = e.clientY - thumbItem.getBoundingClientRect().top
     const onPointerUp = (e) => {
-      document.removeEventListener('pointermove', onPointerMove);
-      isTouchingScrollbar = false;
-    };
-    document.addEventListener('pointermove', onPointerMove);
-    document.addEventListener('pointerup', onPointerUp);
-  };
+      document.removeEventListener('pointermove', onPointerMove)
+      setIsTouchingScrollbar(false)
+    }
+    document.addEventListener('pointermove', onPointerMove)
+    document.addEventListener('pointerup', onPointerUp)
+  }
 
   return (
     <div className="custom-window">
@@ -76,6 +71,7 @@ export default function WindowWithCustomScrollbar({ text }) {
           <img src={thumb} alt="" />
         </div>
       </div>
+
       <div className="custom-window__text-window">
         <p className="custom-window__text" ref={content}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. A reiciendis
@@ -251,5 +247,5 @@ export default function WindowWithCustomScrollbar({ text }) {
         {/* <div className="custom-window__fade"></div> */}
       </div>
     </div>
-  );
+  )
 }
