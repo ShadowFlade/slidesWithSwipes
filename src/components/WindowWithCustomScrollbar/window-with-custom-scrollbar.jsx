@@ -37,7 +37,7 @@ export default function WindowWithCustomScrollbar({ text }) {
       let newY = event.clientY - trackY - offsetY
 
       if (newY < 0) {
-        newY = 0 + thumbHeight / 2 + 'px'
+        newY = 0 + thumbHeight / 1.9 + 'px'
       } else if (newY + thumbHeight > trackHeight.current) {
         newY = trackHeight.current - thumbHeight + 'px'
       } else {

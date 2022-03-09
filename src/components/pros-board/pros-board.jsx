@@ -1,13 +1,13 @@
-import React from 'react';
-import Pro from '../pro/pro';
-import utensils from '../pro/icon1.png';
-import calendar from '../pro/icon2.png';
-import Button from '../button/button';
-import './pros-board.scss';
+import React from 'react'
+import Pro from '../pro/pro'
+import utensils from '../pro/icon1.png'
+import calendar from '../pro/icon2.png'
+import Button from '../button/button'
+import './pros-board.scss'
 export default function ProsBoard({ setIsOpen, openModal, header, title }) {
   const text1 =
-    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae unde maiores dolorum.';
-  const text2 = 'A arcu cursus vitae';
+    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae unde maiores dolorum.'
+  const text2 = 'A arcu cursus vitae'
   return (
     <div className="pros-board">
       <div className="product-screen__header">
@@ -24,7 +24,8 @@ export default function ProsBoard({ setIsOpen, openModal, header, title }) {
               src={utensils}
               text={text1}
               alt="utensils in blue color"
-              type="big"></Pro>
+              type="big"
+            ></Pro>
           </div>
           <div className="pros-board__group">
             <div className="pros-board__item">
@@ -33,20 +34,22 @@ export default function ProsBoard({ setIsOpen, openModal, header, title }) {
                 src={calendar}
                 alt="calendar in blue color"
                 text={text2}
-                type="small"></Pro>
+                type="small"
+              ></Pro>
             </div>
             <div className="pros-board__item">
               <Button
                 onClick={() => {
-                  openModal();
+                  openModal()
                 }}
                 element="plus"
                 color="white"
-                text="Подробнее"></Button>
+                text="Подробнее"
+              ></Button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
