@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
-import { useContext } from 'react';
+import React, { useEffect, useRef, useCallback, useState, useContext } from 'react';
 import AppContext from '../../context';
-import './window-with-custom-scrollbar.scss';
 import thumb from './thumb.png';
+import './window-with-custom-scrollbar.scss';
 
 export default function WindowWithCustomScrollbar() {
   const [offsetY, setOffsetY] = useState(0);
@@ -10,9 +9,10 @@ export default function WindowWithCustomScrollbar() {
   const content = useRef();
   const scrollThumb = useRef();
   const scrollTrack = useRef();
-  const trackHeight = useRef(0);
   const [isTouchingScrollbar, setIsTouchingScrollbar] = useState(false);
-
+  const onScroll = () => {
+    syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
+  };
   const syncScrollbars = (thumb, elWithScroll, track) => {
     const scrollHeight = elWithScroll.scrollHeight;
     const customBarHeight = track.offsetHeight;
@@ -27,46 +27,38 @@ export default function WindowWithCustomScrollbar() {
   };
   useEffect(() => {
     syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
-  }, [scrollTrack.current]);
+  }, []);
   const onPointerMove = useCallback(
     (e) => {
       const event = e;
       const trackY = scrollTrack.current.getBoundingClientRect().top;
       let newY = event.clientY - trackY - offsetY;
       const thumbHeight = scrollThumb.current.offsetHeight;
-      console.log(newY, thumbHeight, trackHeight.current);
 
       if (newY < 0) {
-        console.log('1');
-        newY = 0 + thumbHeight / 1.9 + 'px';
+        newY = 0 + 'px';
       } else if (newY + thumbHeight > scrollTrack.current.offsetHeight) {
-        console.log('2');
-        newY = scrollTrack.current.offsetHeight - thumbHeight + 'px';
+        newY = scrollTrack.current.offsetHeight - thumbHeight + 10 + 'px';
       } else {
-        console.log('3');
-        scrollThumb.current.style.top = newY + 'px';
         const ratio = content.current.scrollHeight / scrollTrack.current.offsetHeight;
         const scroll = newY * ratio;
         content.current.scrollTo({
           top: scroll,
         });
       }
+      scrollThumb.current.style.top = newY + 'px';
     },
     [offsetY]
   );
   const onPointerDown = (e) => {
     setIsTouchingScrollbar(true);
-    console.log(offsetY, 'start');
     setOffsetY(e.clientY - scrollThumb.current.getBoundingClientRect().top);
-    const onPointerUp = (e) => {
+    const onPointerUp = () => {
       app.current.onpointermove = null;
       setIsTouchingScrollbar(false);
     };
     app.current.onpointermove = onPointerMove;
     app.current.onpointerup = onPointerUp;
-  };
-  const onSync = () => {
-    syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
   };
   return (
     <div className="custom-window">
