@@ -1,37 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { v4 as uuid } from 'uuid'
-
-import { ReactComponent as CloseButton } from './btn_close.svg'
-import { ReactComponent as ArrowBack } from './arrow_back.svg'
-import { ReactComponent as ArrowForward } from './arrow_forward.svg'
-import './message-window.scss'
-import MessageList from '../message-list/message-list'
-export default function MessageWindow({ items, setIsOpen, header, title }) {
-  const [dotes, setDots] = useState([])
-  const [activeDot, setActiveDot] = useState(0)
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { v4 as uuid } from 'uuid';
+import { ReactComponent as CloseButton } from './btn_close.svg';
+import { ReactComponent as ArrowBack } from './arrow_back.svg';
+import { ReactComponent as ArrowForward } from './arrow_forward.svg';
+import './message-window.scss';
+import MessageList from '../message-list/message-list';
+const MessageWindow = forwardRef(({ items, setIsOpen, header, title, shadow }, ref) => {
+  const [dotes, setDots] = useState([]);
+  const [activeDot, setActiveDot] = useState(0);
+  const messageList = useRef();
   const closeModal = () => {
-    const shadow = document.getElementsByClassName('shadow')[0]
-    shadow.classList.remove('shadow--active')
-    const modal = document.getElementsByClassName('message-window')[0]
-    modal.classList.remove('message-window--active')
-    setIsOpen(false)
-  }
+    shadow.current.classList.remove('shadow--active');
+    ref.current.classList.remove('message-window--active');
+    setIsOpen(false);
+  };
+  const dotesDIV = useRef();
   const isVisible = (element) => {
     if (element.offsetLeft > element.offsetWidth) {
-      return false
+      return false;
     } else {
-      return true
+      return true;
     }
-  }
+  };
   useEffect(() => {
-    const dotesDivs = Array.from(
-      document.getElementsByClassName('message-window__dot')
-    )
-    setDots(dotesDivs)
-  }, [])
-  const lists = useRef()
-  const parent = useRef()
-  const [width, setWidth] = useState(0)
+    setDots(dotesDIV.current.children);
+  }, []);
+  const lists = useRef();
+  const parent = useRef();
+  const [width, setWidth] = useState(0);
   const [result, setResult] = useState([
     [
       { text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.' },
@@ -43,31 +39,29 @@ export default function MessageWindow({ items, setIsOpen, header, title }) {
       { text: 'Lorem ipsum dolor sit amet.' },
       { text: 'Lorem ipsum dolor sit amet.' },
     ],
-  ])
-  const onArrowClickBack = (element) => {
-    const item = document.getElementsByClassName('message-window__list')[0]
+  ]);
+  const onArrowClickBack = () => {
     parent.current.scrollBy({
-      left: -item.offsetWidth,
+      left: -messageList.offsetWidth,
       behavior: 'smooth',
-    })
+    });
 
-    setActiveDot(activeDot - 1)
-    dotes[activeDot - 1].classList.add('active')
-    dotes[activeDot].classList.remove('active')
-  }
+    setActiveDot(activeDot - 1);
+    dotes[activeDot - 1].classList.add('active');
+    dotes[activeDot].classList.remove('active');
+  };
   const onArrowClickForward = () => {
-    const item = document.getElementsByClassName('message-window__list')[0]
     parent.current.scrollBy({
-      left: item.offsetWidth,
+      left: messageList.offsetWidth,
       behavior: 'smooth',
-    })
+    });
 
-    setActiveDot(activeDot + 1)
-    dotes[activeDot + 1].classList.add('active')
-    dotes[activeDot].classList.remove('active')
-  }
+    setActiveDot(activeDot + 1);
+    dotes[activeDot + 1].classList.add('active');
+    dotes[activeDot].classList.remove('active');
+  };
   return (
-    <div className="message-window">
+    <div className="message-window" ref={ref}>
       <div className="message-window__header" style={{ paddingLeft: '0' }}>
         <h2>{header}</h2>
         <h1 className="message-window__title">
@@ -82,16 +76,13 @@ export default function MessageWindow({ items, setIsOpen, header, title }) {
       ></CloseButton>
       <div className="message-window__inner">
         <div className="message-window__content" ref={parent}>
-          <div
-            className="message-window__lists"
-            ref={lists}
-            style={{ width: `${width}%` }}
-          >
+          <div className="message-window__lists" ref={lists} style={{ width: `${width}%` }}>
             <MessageList
               items={result}
               numberOfElementsOnPage={3}
               width={width}
               setWidth={setWidth}
+              ref={messageList}
             ></MessageList>
           </div>
         </div>
@@ -100,7 +91,7 @@ export default function MessageWindow({ items, setIsOpen, header, title }) {
             onClick={(e) => onArrowClickBack(e.currentTarget)}
             className="message-window__arrow message-window__arrow--back"
           ></ArrowBack>
-          <div className="message-window__dotes">
+          <div className="message-window__dotes" ref={dotesDIV}>
             <div className="message-window__dot active"></div>
             <div className="message-window__dot"></div>
           </div>
@@ -111,5 +102,6 @@ export default function MessageWindow({ items, setIsOpen, header, title }) {
         </div>
       </div>
     </div>
-  )
-}
+  );
+});
+export default MessageWindow;

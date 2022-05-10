@@ -1,12 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import './message-list.scss';
-export default function MessageList({
-  items,
-  numberOfElementsOnPage,
-  width,
-  setWidth,
-}) {
+const MessageList = forwardRef(({ items, numberOfElementsOnPage, width, setWidth }, ref) => {
   let id = 0;
   useEffect(() => {
     setWidth(width + 100 * items.length);
@@ -16,7 +11,7 @@ export default function MessageList({
     <>
       {items.map((list) => {
         return (
-          <ul className="message-window__list" key={uuid()}>
+          <ul className="message-window__list" ref={ref} key={uuid()}>
             {list.map((item) => {
               id++;
               return (
@@ -31,4 +26,5 @@ export default function MessageList({
       })}
     </>
   );
-}
+});
+export default MessageList;

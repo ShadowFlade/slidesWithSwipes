@@ -10,9 +10,7 @@ export default function WindowWithCustomScrollbar() {
   const scrollThumb = useRef();
   const scrollTrack = useRef();
   const [isTouchingScrollbar, setIsTouchingScrollbar] = useState(false);
-  const onScroll = () => {
-    syncScrollbars(scrollThumb.current, content.current, scrollTrack.current);
-  };
+
   const syncScrollbars = (thumb, elWithScroll, track) => {
     const scrollHeight = elWithScroll.scrollHeight;
     const customBarHeight = track.offsetHeight;

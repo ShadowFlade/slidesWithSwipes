@@ -11,6 +11,7 @@ import './App.scss';
 export default function App() {
   const scroll = useRef();
   const app = useRef();
+  const appContent = useRef();
   const slide = ({ scroll, app, forward }) => {
     scroll.current.scrollBy({
       left: forward ? app.current.clientWidth : -app.current.clientWidth,
@@ -60,8 +61,8 @@ export default function App() {
     <div className="app" ref={app}>
       <AppContext.Provider value={app}>
         <div className="app__inner" ref={scroll}>
-          <Navbar></Navbar>
-          <div className="app__content">
+          <Navbar ref={appContent}></Navbar>
+          <div className="app__content" ref={appContent}>
             <Main
               slide={slide.bind(this, { app, scroll, forward: true })}
               setBackgroundPic={setBackground}
